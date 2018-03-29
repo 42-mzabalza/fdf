@@ -19,8 +19,8 @@ $(LIBFT):
 	make -C libft
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(LIBFT) -lmlx -framework OpenGL -framework Appkit -o $(NAME)
-
+	$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+#-lmlx -framework OpenGL -framework Appkit 
 clean:
 	/bin/rm -rf $(OBJ)
 	make -C libft clean

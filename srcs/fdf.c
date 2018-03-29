@@ -12,36 +12,29 @@
 
 #include "../includes/fdf.h"
 
-//OJO si el input es negativo problemas. HEXADECIMAL
-
+//OJO si el input HEXADECIMAL
 static int		*ft_parse_line(t_map *map, char *line)
 {
 	int i;
 	int *dst;
 	int a;
 
+	i = 0;
 	if (!(dst = (int *)malloc(sizeof(int) * (map->x))))
 		exit(1);
-	i = 0;
-	ft_putendl(line);
-	while(*line)
+	while (*line)
 	{
-		if (ft_isdigit(line[i]))
+		if (*line != ' ')
 		{
 			dst[i] = ft_atoi(line);
-			ft_putstr("\nnumber: ");
-			ft_putnbr(ft_atoi(line));
-			a = ft_ndigits(dst[i]);
-			ft_putstr("\na: ");
-			ft_putnbr(a);
-			line += a;
-			i++;
+	 		line += ft_ndigits(ft_atoi(line));
+	 		i++;
 		}
 		else
 			line++;
 	}
 	return (dst);
-	//return (NULL);
+	
 }
 
 static int		**ft_parse_map(t_map *map, char *doc)
@@ -93,36 +86,39 @@ static t_map 	*get_colrow(char *doc)
 	return (map);
 }
 
-static void 	print_line(void *mlx_ptr, void *win_ptr)
-{
-	int i;
-	i = 0;
-	while (i < 1000)
-	{
-		mlx_pixel_put(mlx_ptr, win_ptr, i, 500, 0xFFFFFF);
-		i++;
-	}
-	i = 0;
-	while (i < 1000)
-	{
-		mlx_pixel_put(mlx_ptr, win_ptr, 500, i, 0xFFFFFF);
-		i++;
-	}
-}
+// static void 	print_line(void *mlx_ptr, void *win_ptr)
+// {
+// 	int i;
+// 	i = 0;
+// 	while (i < 1000)
+// 	{
+// 		mlx_pixel_put(mlx_ptr, win_ptr, i, 500, 0xFFFFFF);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (i < 1000)
+// 	{
+// 		mlx_pixel_put(mlx_ptr, win_ptr, 500, i, 0xFFFFFF);
+// 		i++;
+// 	}
+// }
 
 int 				main(int ac, char **av)
 {
-	void *mlx_ptr;
-	void *win_ptr;
+	// void *mlx_ptr;
+	// void *win_ptr;
+	int i;
+	int j;
 	t_map	*map;
 
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 1000, 1000, "prueba mlx");
+	// mlx_ptr = mlx_init();
+	// win_ptr = mlx_new_window(mlx_ptr, 1000, 1000, "prueba mlx");
 	// if(!(map = read_map(ac, av)))
 	// 	return (0);
 	map = get_colrow(av[1]);
 	ft_putnbr(map->x);
 	ft_putnbr(map->y);
+
 	//print_line(mlx_ptr, win_ptr);
 	//mlx_pixel_put(mlx_ptr, win_ptr, 250, 250, 0xFFFFFF);
 	//mlx_loop(mlx_ptr);
