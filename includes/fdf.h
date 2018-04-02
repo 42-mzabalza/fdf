@@ -13,18 +13,36 @@
 #ifndef FDF_H
 # define FDF_H
 # include "../libft/libft.h"
-// #include "mlx.h"
+#include "mlx.h"
 #include <fcntl.h>
 
+/*
+**map->size		size of output window
+**map->x			number of columns
+**map->y			number of rows
+**map->matrix	map stored in a char **variable
+*/
 
 typedef struct 		s_map
 {
+	void 			*mlx_ptr;
+	void 			*win_ptr;
+	int				size;
+	int				scal;
 	int				x;
 	int				y;
 	int				**matrix;
-}					t_map;
+}								t_map;
+
+typedef struct	s_point
+{
+	int				x;
+	int 			y;
+}								t_point;
 
 int 				main(int ac, char **av);
-void	     		show_usage(void);
+void	     	show_usage(void);
+void 				print_2dmap(t_map *map);
+void				print_line(t_map *map);
 
 #endif

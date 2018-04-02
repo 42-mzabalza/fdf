@@ -15,6 +15,7 @@
 //OJO si el input HEXADECIMAL
 static int		*ft_parse_line(t_map *map, char *line)
 {
+
 	int i;
 	int *dst;
 	int a;
@@ -34,7 +35,7 @@ static int		*ft_parse_line(t_map *map, char *line)
 			line++;
 	}
 	return (dst);
-	
+
 }
 
 static int		**ft_parse_map(t_map *map, char *doc)
@@ -81,46 +82,28 @@ static t_map 	*get_colrow(char *doc)
 		}
 		(map->y)++;
 	}
-	map->matrix = ft_parse_map(map, doc);
+	//map->matrix = ft_parse_map(map, doc);
 	close(fd);
 	return (map);
 }
 
-// static void 	print_line(void *mlx_ptr, void *win_ptr)
-// {
-// 	int i;
-// 	i = 0;
-// 	while (i < 1000)
-// 	{
-// 		mlx_pixel_put(mlx_ptr, win_ptr, i, 500, 0xFFFFFF);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (i < 1000)
-// 	{
-// 		mlx_pixel_put(mlx_ptr, win_ptr, 500, i, 0xFFFFFF);
-// 		i++;
-// 	}
-// }
-
 int 				main(int ac, char **av)
 {
-	// void *mlx_ptr;
-	// void *win_ptr;
+	void *mlx_ptr;
+	void *win_ptr;
+	t_map	*map;
 	int i;
 	int j;
-	t_map	*map;
 
-	// mlx_ptr = mlx_init();
-	// win_ptr = mlx_new_window(mlx_ptr, 1000, 1000, "prueba mlx");
-	// if(!(map = read_map(ac, av)))
-	// 	return (0);
 	map = get_colrow(av[1]);
-	ft_putnbr(map->x);
-	ft_putnbr(map->y);
+	map->mlx_ptr = mlx_init();
+	map->size = 1000;
+	map->win_ptr = mlx_new_window(map->mlx_ptr, (map->size), (map->size), "prueba mlx");
+	map->scal = map->size / map->x;
 
-	//print_line(mlx_ptr, win_ptr);
-	//mlx_pixel_put(mlx_ptr, win_ptr, 250, 250, 0xFFFFFF);
-	//mlx_loop(mlx_ptr);
+	print_line(map);
+	//print_2dmap(map);
+
+	mlx_loop(map->mlx_ptr);
 	return (1);
 }
