@@ -20,6 +20,7 @@ SRC = ft_abs.c\
 	ft_pow.c\
 	ft_swap.c\
 	ft_range.c\
+	ft_isnum.c\
 	ft_isalnum.c\
 	ft_isalpha.c\
 	ft_isascii.c\
@@ -81,7 +82,8 @@ SRC = ft_abs.c\
 	ft_strtrim.c\
 	ft_tolower.c\
 	ft_toupper.c\
-	ft_ndigits.c
+	ft_ndigits.c\
+	get_next_line.c
 
 
 OBJ = $(SRC:.c=.o)

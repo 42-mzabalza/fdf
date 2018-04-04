@@ -45,6 +45,7 @@ char				*ft_strnstr(const char *hay, const char *ne, size_t len);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_ndigits(int nb);
+int					ft_isnum(char *str);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);

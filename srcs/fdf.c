@@ -12,98 +12,39 @@
 
 #include "../includes/fdf.h"
 
-//OJO si el input HEXADECIMAL
-static int		*ft_parse_line(t_map *map, char *line)
+static  int	fdf_init(t_map *map, char *doc)
 {
-
-	int i;
-	int *dst;
-	int a;
-
-	i = 0;
-	if (!(dst = (int *)malloc(sizeof(int) * (map->x))))
-		exit(1);
-	while (*line)
-	{
-		if (*line != ' ')
-		{
-			dst[i] = ft_atoi(line);
-	 		line += ft_ndigits(ft_atoi(line));
-	 		i++;
-		}
-		else
-			line++;
-	}
-	return (dst);
-
+	map->dx = 0;
+	map->dy = 0;
+	map->nb_col = 0;
+	map->nb_row = 0;
+	map->doc = doc;
+	map->mlx_ptr = mlx_init();
+	map->win_ptr = mlx_new_window(map->mlx_ptr, WIDTH, HEIGHT, "prueba mlx");
+	//si el open falla que devolvia??
+	if (!(map->fd = open(map->doc, O_RDONLY)))
+		return (0);
+	return (1);
 }
 
-static int		**ft_parse_map(t_map *map, char *doc)
+int 			main(int ac, char **av)
 {
-	int 	fd;
-	int 	j;
-	int		**dst;
-	char 	*line;
-
-	j = 0;
-	if (!(dst = (int **)malloc(sizeof(int *) * (map->y))))
-		exit(1);
-	if (!(fd = open(doc, O_RDONLY)))
-		exit(1);
-	while (get_next_line(fd, &line) > 0)
-	{
-		dst[j] = ft_parse_line(map, line);
-		j++;
-	}
-	return (dst);
-}
-
-static t_map 	*get_colrow(char *doc)
-{
-	int 	i;
-	int 	fd;
-	char 	*line;
-	t_map 	*map;
-
-	if (!(fd = open(doc, O_RDONLY)))
-		exit(1);
-	if (!(map = (t_map *)malloc(sizeof(t_map))))
-		exit(1);
-	map->x = 0;
-	map->y= 0;
-	while (get_next_line(fd, &line) > 0)
-	{
-		i  = 0;
-		while (line[i])
-		{
-			if (ft_isdigit(line[i]) && !(map->y))
-				(map->x)++;
-			i++;
-		}
-		(map->y)++;
-	}
-	//map->matrix = ft_parse_map(map, doc);
-	close(fd);
-	return (map);
-}
-
-int 				main(int ac, char **av)
-{
-	void *mlx_ptr;
-	void *win_ptr;
-	t_map	*map;
+	void 	*mlx_ptr;
+	void 	*win_ptr;
+	t_map	map;
 	int i;
 	int j;
 
-	map = get_colrow(av[1]);
-	map->mlx_ptr = mlx_init();
-	map->size = 1000;
-	map->win_ptr = mlx_new_window(map->mlx_ptr, (map->size), (map->size), "prueba mlx");
-	map->scal = map->size / map->x;
-
-	print_line(map);
+	if (ac != 2)
+		return (ft_error("Usage : ./fdf <filename> [ case_size z_size ]", 1));
+	if (!(fdf_init(&map, av[1])))
+		return (ft_error("Error", 1));
+	if (!(ft_parser(&map)))
+		return (ft_error("Error", 1));
+	draw_map(&map);
+	//print_line(map);
 	//print_2dmap(map);
 
-	mlx_loop(map->mlx_ptr);
-	return (1);
+	mlx_loop(map.mlx_ptr);
+	return (0);
 }

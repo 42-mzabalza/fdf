@@ -13,8 +13,12 @@
 #ifndef FDF_H
 # define FDF_H
 # include "../libft/libft.h"
-#include "mlx.h"
-#include <fcntl.h>
+# include "mlx.h"
+# include <fcntl.h>
+# include <math.h>
+
+# define WIDTH 1000
+# define HEIGHT 1000
 
 /*
 **map->size		size of output window
@@ -23,26 +27,42 @@
 **map->matrix	map stored in a char **variable
 */
 
-typedef struct 		s_map
+typedef struct 		s_point
 {
-	void 			*mlx_ptr;
-	void 			*win_ptr;
-	int				size;
-	int				scal;
 	int				x;
 	int				y;
-	int				**matrix;
-}								t_map;
 
-typedef struct	s_point
+}					t_point;
+
+typedef struct 		s_map
 {
-	int				x;
-	int 			y;
-}								t_point;
+	int				slopex;
+	int				slopey;
+	char			*doc;
+	void 			*mlx_ptr;
+	void 			*win_ptr;
+	int				fd;
+	int				scal;
+	int				dx;
+	int				sx;
+	int				dy;
+	int				sy;
+	int				p1[2];
+	int				p2[2];
+	int				nb_col;
+	int				nb_row;
+	int				**matrix;
+	t_point			**p_matrix;
+
+}					t_map;
+
 
 int 				main(int ac, char **av);
-void	     	show_usage(void);
+void				show_map(t_map *map);
+void				show_p_matrix(t_map *map, t_point **p_matrix);
 void 				print_2dmap(t_map *map);
-void				print_line(t_map *map);
-
+int					draw_map(t_map *map);
+int					ft_error(char *str, int rtn_value);
+int					ft_parser(t_map *map);
+int					get_next_line(const int fd, char **line);
 #endif

@@ -7,11 +7,12 @@ CC = clang
 
 FLAGS = -Wall -Werror -Wextra -I./includes
 
-SRC = srcs/get_next_line.c\
-		srcs/fdf.c\
-		srcs/print_line.c\
-		srcs/show_usage.c\
-		srcs/print_2dmap.c
+SRC = srcs/fdf.c\
+		srcs/ft_parser.c\
+		srcs/draw_map.c\
+		srcs/show_map.c\
+		srcs/ft_error.c
+		
 
 OBJ		= $(SRC:.c=.o)
 
