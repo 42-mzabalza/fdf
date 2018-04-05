@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define WIDTH 1000
+# define WIDTH 1500
 # define HEIGHT 1000
 
 /*
@@ -43,9 +43,9 @@ typedef struct 		s_map
 	void 			*win_ptr;
 	int				fd;
 	int				scal;
-	int				dx;
+	int				tx;
 	int				sx;
-	int				dy;
+	int				ty;
 	int				sy;
 	int				p1[2];
 	int				p2[2];
@@ -65,4 +65,11 @@ int					draw_map(t_map *map);
 int					ft_error(char *str, int rtn_value);
 int					ft_parser(t_map *map);
 int					get_next_line(const int fd, char **line);
+/*
+**----------GEOMETRIC TRANSFORMATIONS-------------------------------
+*/
+void		rotate(t_map *map, t_point **matrix, double rad);
+void		traslation(t_map *map, int tx, int ty);
+void		scaling(t_map *map, t_point **matrix);
+
 #endif

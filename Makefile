@@ -11,7 +11,8 @@ SRC = srcs/fdf.c\
 		srcs/ft_parser.c\
 		srcs/draw_map.c\
 		srcs/show_map.c\
-		srcs/ft_error.c
+		srcs/ft_error.c\
+		srcs/geometric_transf.c  
 		
 
 OBJ		= $(SRC:.c=.o)

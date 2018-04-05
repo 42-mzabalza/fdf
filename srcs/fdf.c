@@ -14,8 +14,8 @@
 
 static  int	fdf_init(t_map *map, char *doc)
 {
-	map->dx = 0;
-	map->dy = 0;
+	map->tx = 0;
+	map->ty = 0;
 	map->nb_col = 0;
 	map->nb_row = 0;
 	map->doc = doc;
@@ -44,7 +44,9 @@ int 			main(int ac, char **av)
 	draw_map(&map);
 	//print_line(map);
 	//print_2dmap(map);
+	
 
 	mlx_loop(map.mlx_ptr);
+	
 	return (0);
 }
