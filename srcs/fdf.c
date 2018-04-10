@@ -12,8 +12,36 @@
 
 #include "../includes/fdf.h"
 
-static  int	fdf_init(t_map *map, char *doc)
+// static int gere_mouse(int x,int y,int button,void*toto)
+// {
+//   printf("Mouse event - new win\n");
+//   mlx_destroy_window(mlx,win1);
+//   win1 = mlx_new_window(mlx,random()%500,random()%500,"new win");
+//   mlx_mouse_hook(win1,gere_mouse,0);
+// }
+static void		matrix_init(t_map *map)
 {
+	int i;
+	int j;
+
+	i = 0;
+	while (i < (map->nb_row))
+	{
+		j = 0;
+		while (j < (map->nb_col))
+		{
+			map->p_matrix[i][j].z = 0;
+			map->p_matrix[i][j].x = 0;
+			map->p_matrix[i][j].y = 0;
+			j++;
+		}
+		i++;
+	}
+}
+
+static  int		fdf_init(t_map *map, char *doc)
+{
+	matrix_init(map);
 	map->tx = 0;
 	map->ty = 0;
 	map->nb_col = 0;
@@ -41,11 +69,13 @@ int 			main(int ac, char **av)
 		return (ft_error("Error", 1));
 	if (!(ft_parser(&map)))
 		return (ft_error("Error", 1));
-	draw_map(&map);
+	create_points(&map);
 	//print_line(map);
 	//print_2dmap(map);
 	
-
+	mlx_key_hook(map.win_ptr, deal_key, &map);
+	//mlx_mouse_hook(map.win_ptr,gere_mouse,0);
+	//mlx_clear_window(map.mlx_ptr, map.win_ptr);
 	mlx_loop(map.mlx_ptr);
 	
 	return (0);

@@ -29,24 +29,23 @@
 
 typedef struct 		s_point
 {
-	int				x;
-	int				y;
+	int			x;
+	int			y;
+	int			z;
 
 }					t_point;
 
 typedef struct 		s_map
 {
-	int				slopex;
-	int				slopey;
 	char			*doc;
 	void 			*mlx_ptr;
 	void 			*win_ptr;
 	int				fd;
 	int				scal;
 	int				tx;
-	int				sx;
+	int				lx;
 	int				ty;
-	int				sy;
+	int				ly;
 	int				p1[2];
 	int				p2[2];
 	int				nb_col;
@@ -61,15 +60,25 @@ int 				main(int ac, char **av);
 void				show_map(t_map *map);
 void				show_p_matrix(t_map *map, t_point **p_matrix);
 void 				print_2dmap(t_map *map);
-int					draw_map(t_map *map);
+int					create_points(t_map *map);
 int					ft_error(char *str, int rtn_value);
 int					ft_parser(t_map *map);
 int					get_next_line(const int fd, char **line);
 /*
 **----------GEOMETRIC TRANSFORMATIONS-------------------------------
 */
-void		rotate(t_map *map, t_point **matrix, double rad);
+void		rotate(t_map *map, t_point **matrix, float rad);
 void		traslation(t_map *map, int tx, int ty);
-void		scaling(t_map *map, t_point **matrix);
-
+void		scaling(t_map *map, t_point **p_matrix, int scal);
+void		add_height(t_map *map, t_point **p_matrix, int h);
+/*
+**----------GEOMETRIC TRANSFORMATIONS-------------------------------
+*/
+void		draw_points(t_map *map, t_point **p_matrix);
+void		draw_xlines(t_map *map, t_point **p_matrix);
+void		draw_ylines(t_map *map, t_point **p_matrix);
+/*
+**----------EVENT MANAGEMENT-------------------------------
+*/
+int		deal_key(int key, void *param);
 #endif

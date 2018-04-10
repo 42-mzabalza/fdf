@@ -9,10 +9,13 @@ FLAGS = -Wall -Werror -Wextra -I./includes
 
 SRC = srcs/fdf.c\
 		srcs/ft_parser.c\
-		srcs/draw_map.c\
+		srcs/create_points.c\
 		srcs/show_map.c\
 		srcs/ft_error.c\
-		srcs/geometric_transf.c  
+		srcs/draw_map.c\
+		srcs/geometric_transf.c\
+		srcs/deal_key.c
+
 		
 
 OBJ		= $(SRC:.c=.o)

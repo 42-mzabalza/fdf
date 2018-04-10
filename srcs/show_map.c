@@ -27,6 +27,8 @@ void	show_p_matrix(t_map *map, t_point **p_matrix)
 			ft_putchar(',');
 			ft_putnbr(p_matrix[i][j].y);
 			ft_putchar(' ');
+			ft_putnbr(p_matrix[i][j].z);
+			ft_putchar(' ');
 			j++;
 		}
 		ft_putchar('\n');
