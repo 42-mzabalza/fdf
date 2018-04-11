@@ -34,26 +34,37 @@ int			deal_key(int keycode, void *map)
 		exit(1);
 	}
 	if (keycode == 124) // RIGHT ARROW
-		traslation(new_map, 10, 0);
+		new_map->tx += 30;
 	if (keycode == 123) // LEFT ARROW
-		traslation(new_map, -10, 0);
+		new_map->tx -= 30;
 	if (keycode == 126) // UP ARROW
-		traslation(new_map, 0, -10);
+		new_map->ty -= 30;
 	if (keycode == 125) // DOWN ARROW
-		traslation(new_map, 0, 10);
+		new_map->ty += 30;
 	if (keycode == 46) // m key
-		add_height(new_map, new_map->p_matrix, 5);
+		new_map->height += 0.5;
 	if (keycode == 45) // n key
-		add_height(new_map, new_map->p_matrix, -5);
+		new_map->height -= 0.5;
 	// if (keycode == 15) // r key - rotate
 	// 	rotate(new_map, new_map->p_matrix, 30 * M_PI / 180);
-	if (keycode == 69) // + key
-		scaling(new_map, new_map->p_matrix, 2);
-	if (keycode == w) // w key
-		rotate_y(new_map, new_map->p_matrix, 30 * M_PI / 180);
+	if (keycode == 69) // + key ZOOM IN
+		new_map->lxy += 10;
+	if (keycode == 78) // - key ZOOM OUT
+		new_map->lxy -= 10;
+	if (keycode == 13) // w key
+		new_map->radx += (10 * M_PI / 180); // intentar hacer el cambio mas tarde
+	if (keycode == 1) // s key
+		new_map->radx -= (10 * M_PI / 180); // intentar hacer el cambio mas tarde
+		//rotate_x(new_map, new_map->p_matrix, 30 * M_PI / 180);
+	if (keycode == 0) // a key
+		new_map->rady -= (10 * M_PI / 180);
+	if (keycode == 2) // d key
+		new_map->rady += (10 * M_PI / 180); // intentar hacer el cambio mas tarde
 	ft_clear(new_map);
-	draw_xlines(map, new_map->p_matrix);
-	draw_ylines(map, new_map->p_matrix);
+	ft_new_matrix(new_map, new_map->p_matrix);
+	draw_xlines(new_map, new_map->p_matrix);
+	draw_ylines(new_map, new_map->p_matrix);
+	//show_p_matrix(map, new_map->p_matrix);
 	ft_putchar('\n');
 	return (0);
 }

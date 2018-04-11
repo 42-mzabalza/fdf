@@ -29,23 +29,32 @@
 
 typedef struct 		s_point
 {
-	int			x;
-	int			y;
-	int			z;
+	float			x;
+	float			y;
+	float			z;
+	int				i;
+	int				j;
 
 }					t_point;
 
 typedef struct 		s_map
 {
+	float			radx;
+	float			rady;
+	float			radz;
 	char			*doc;
 	void 			*mlx_ptr;
 	void 			*win_ptr;
 	int				fd;
 	int				scal;
+	// punto inicial
 	int				tx;
-	int				lx;
 	int				ty;
-	int				ly;
+	// distancia entre puntos
+	int				lxy;
+	//altura
+	int				height;
+	
 	int				p1[2];
 	int				p2[2];
 	int				nb_col;
@@ -64,11 +73,13 @@ int					create_points(t_map *map);
 int					ft_error(char *str, int rtn_value);
 int					ft_parser(t_map *map);
 int					get_next_line(const int fd, char **line);
+void				ft_new_matrix(t_map *map, t_point **p_matrix);
 /*
 **----------GEOMETRIC TRANSFORMATIONS-------------------------------
 */
-void		rotate(t_map *map, t_point **matrix, float rad);
-void		traslation(t_map *map, int tx, int ty);
+
+void		rotate_y(float *x, float *z, float rad);
+void		rotate_x(float *y, float *z, float rad);
 void		scaling(t_map *map, t_point **p_matrix, int scal);
 void		add_height(t_map *map, t_point **p_matrix, int h);
 /*
@@ -80,5 +91,5 @@ void		draw_ylines(t_map *map, t_point **p_matrix);
 /*
 **----------EVENT MANAGEMENT-------------------------------
 */
-int		deal_key(int key, void *param);
+int			deal_key(int key, void *param);
 #endif

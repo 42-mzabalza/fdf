@@ -30,9 +30,9 @@ static void		matrix_init(t_map *map)
 		j = 0;
 		while (j < (map->nb_col))
 		{
-			map->p_matrix[i][j].z = 0;
-			map->p_matrix[i][j].x = 0;
-			map->p_matrix[i][j].y = 0;
+			map->p_matrix[i][j].z = 0.0;
+			map->p_matrix[i][j].x = 0.0;
+			map->p_matrix[i][j].y = 0.0;
 			j++;
 		}
 		i++;
@@ -41,17 +41,25 @@ static void		matrix_init(t_map *map)
 
 static  int		fdf_init(t_map *map, char *doc)
 {
-	matrix_init(map);
+	map->doc = doc;
+	//matrix_init(map);
+	map->fd = open(map->doc, O_RDONLY);
+	ft_putnbr(map->fd);
+	if (map->fd == -1)
+		return (0);
+	ft_putchar('z');
+	map->height = 1;
+	map->radx = 0.0;
+	map->rady = 0.0;
+	map->radz = 0.0;
 	map->tx = 0;
 	map->ty = 0;
 	map->nb_col = 0;
 	map->nb_row = 0;
-	map->doc = doc;
 	map->mlx_ptr = mlx_init();
 	map->win_ptr = mlx_new_window(map->mlx_ptr, WIDTH, HEIGHT, "prueba mlx");
 	//si el open falla que devolvia??
-	if (!(map->fd = open(map->doc, O_RDONLY)))
-		return (0);
+	
 	return (1);
 }
 

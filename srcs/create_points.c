@@ -12,6 +12,34 @@
 
 #include "../includes/fdf.h"
 
+void			ft_new_matrix(t_map *map, t_point **p_matrix)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < (map->nb_row))
+	{
+		j = 0;
+		while (j < (map->nb_col))
+		{
+			p_matrix[i][j].x = (j * map->lxy);
+			p_matrix[i][j].y = (i * map->lxy);
+			p_matrix[i][j].z = map->matrix[i][j] * map->lxy * map->height;
+			p_matrix[i][j].y -= (map->nb_row / 2) *  map->lxy;
+			p_matrix[i][j].x -= (map->nb_col / 2) *  map->lxy;
+			rotate_x(&p_matrix[i][j].y, &p_matrix[i][j].z, map->radx);
+			rotate_y(&p_matrix[i][j].x, &p_matrix[i][j].z, map->rady);
+			p_matrix[i][j].y += (map->nb_row / 2) *  map->lxy;
+			p_matrix[i][j].x += (map->nb_col / 2) *  map->lxy;
+			p_matrix[i][j].x += map->tx;
+			p_matrix[i][j].y += map->ty;
+			j++;
+		}
+		i++;
+	}
+}
+
 static void	insert_p_matrix(t_map *map, t_point **p_matrix)
 {
 	int i;
@@ -24,8 +52,10 @@ static void	insert_p_matrix(t_map *map, t_point **p_matrix)
 		while (j < (map->nb_col))
 		{
 			p_matrix[i][j].z = map->matrix[i][j];
-			p_matrix[i][j].x = (j * map->lx);
-			p_matrix[i][j].y = (i * map->ly);
+			p_matrix[i][j].x = (j * map->lxy) + map->tx;
+			p_matrix[i][j].y = (i * map->lxy) + map->ty;
+			p_matrix[i][j].i = i;
+			p_matrix[i][j].j = j;
 			j++;
 		}
 		i++;
@@ -54,28 +84,21 @@ int		       create_points(t_map *map)
 
 	t_point **p_matrix;
 	//starting points
-	map->tx = 20;
-	map->ty = 20;
+	map->tx =  WIDTH * 0.3;
+	map->ty = HEIGHT * 0.2;
 	//lenght of lines
-	map->lx = ((WIDTH * 0.4) / (map->nb_col));    // 800/19
-	map->ly = ((HEIGHT * 0.5) / (map->nb_row));   // 800/11
+	if (map->nb_col > map->nb_row)
+		map->lxy = ((WIDTH * 0.5) / (map->nb_col));
+	else
+		map->lxy = ((HEIGHT * 0.5) / (map->nb_row));
 	if (!(p_matrix = alloc_point_matrix(map)))
 		return (0);
 	insert_p_matrix(map, p_matrix);
 	map->p_matrix = p_matrix;
-	traslation(map, WIDTH * 0.3, HEIGHT * 0.2); //como se dice en englis traslacion
 
-
-	//show_p_matrix(map, p_matrix);
-	//draw_points(map, p_matrix);
-	//mlx_clear_window(map->mlx_ptr, map->win_ptr);
-	//sleep(10);
-	//rotate(map, map->p_matrix, 30 * M_PI / 180);
-
-	//add_height(map, map->p_matrix, -5);
-	//draw_points(map, p_matrix);
 	draw_xlines(map, map->p_matrix);
 	draw_ylines(map, map->p_matrix);
+	//show_p_matrix(map, map->p_matrix);
 	//draw_ylines(map, p_matrix);
 	return (1);
 }

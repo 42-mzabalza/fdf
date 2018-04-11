@@ -26,7 +26,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-double				ft_abs(double nb);
+float				ft_abs(float nb);
 int					*ft_range(int min, int max);
 void				ft_swap(int *a, int *b);
 int					ft_pow(int nb, int power);

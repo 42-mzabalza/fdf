@@ -12,6 +12,7 @@
 
 #include "../includes/fdf.h"
 
+
 void		draw_points(t_map *map, t_point **p_matrix)
 {
 	int i;
@@ -30,86 +31,51 @@ void		draw_points(t_map *map, t_point **p_matrix)
 	}
 }
 
-// static void	draw_xline(t_map *map, t_point p1, t_point p2)
-// {
-// 	int		dx;
-// 	int		dy;
-// 	int 	d_err;
-// 	float 	r_err;
-// 	int		x;
-// 	int		y;
-
-// 	dx = p2.x - p1.x;
-// 	dy = p2.y - p1.y;
-// 	d_err = ft_abs(dx / dy);
-// 	r_err = 0.0;
-// 	y = p2.y;
-// 	x = p1.x;
-// 	r_err = 0.5;
-// 	while (x < p2.x)
-// 	{
-// 		mlx_pixel_put(map->mlx_ptr, map->win_ptr, x, y, 0xFFFFFF);
-// 		r_err += d_err;
-// 		 while (r_err ≥ 0.5)
-// 		 {
-// 		 	 y += sign(deltay) * 1;
-//              r_err -= 1.0;
-// 		 }
-            
-
-// 	}
-// }
-
 static void plot_line(t_map *map, t_point p1, t_point p2)
 {
+	int x0 = p1.x;
+	int y0 = p1.y;
+	int x1 = p2.x;
+	int y1 = p2.y;
 	int colour;
-	int dx =  ft_abs(p2.x - p1.x);
-	int sx = p1.x < p2.x ? 1 : -1;
-	int dy = -abs (p2.y - p1.y);
-	int sy = p1.y < p2.y ? 1 : -1; 
-	int err = dx + dy;
-	int e2; /* error value e_xy */
+	float dx = ft_abs(x1 - x0);
+	float sx = x0 < x1 ? 1 : -1;
+	float dy = -(ft_abs(y1 - y0));
+	float sy = y0 < y1 ? 1 : -1; 
+	float err = dx + dy;
+	float e2; /* error value e_xy */
  	
+ 	// p1.y = y0 * cos(map->radx) - z0 * sin(map->radx);
+	// map->p_matrix[i][j].z = y0 * sin(rad) + z0 * cos(rad);
  	colour = 0x999999;
- 	if (p1.z || p2.z)
+ 	if (map->matrix[p1.i][p1.j] || map->matrix[p2.i][p2.j])
  		colour = 0x444444;
- 	if (p1.z && p2.z)
+ 	if (map->matrix[p1.i][p1.j] && map->matrix[p2.i][p2.j])
  		colour = 0xCC0000;
+ 	
+ 	// if (p1.z || p2.z)
+ 	// 	colour = 0x444444;
+ 	// if (p1.z && p2.z)
+ 	// 	colour = 0xCC0000;
 	while (1)  /* loop */
 	{
-		mlx_pixel_put(map->mlx_ptr, map->win_ptr, p1.x, p1.y, colour);
-		if (p1.x == p2.x && p1.y == p2.y) 
+
+		mlx_pixel_put(map->mlx_ptr, map->win_ptr, (int)x0, (int)y0, colour);
+		if (x0 == x1 && y0 == y1) //aqui me podria dar problemas el float
 			break;
 		e2 = 2 * err;
 		if (e2 >= dy)
 		{ 
 			err += dy;
-			p1.x += sx; /* e_xy+e_x > 0 */
+			x0 += sx; /* e_xy+e_x > 0 */
 		} 
 		if (e2 <= dx)
 		{ 
 			err += dx;
-			p1.y += sy; /* e_xy+e_y < 0 */
+			y0 += sy; /* e_xy+e_y < 0 */
 		}
 	}
 }
-
-// static void	draw_xline(t_map *map, t_point p1, t_point p2)
-// {
-// 	double	i;
-// 	double	slope;
-// 	double 	j;
-
-// 	slope = (p2.y - p1.y) / (p2.x - p1.x);
-// 	i = p1.x;
-// 	while (i < p2.x)
-// 	{
-// 		j = slope * (i - p2.x) + p2.y;
-// 		mlx_pixel_put(map->mlx_ptr, map->win_ptr, i, j, 0xFFFFFF);
-// 		i++;
-// 	}
-
-// }
 
 void		draw_ylines(t_map *map, t_point **p_matrix)
 {
@@ -128,6 +94,7 @@ void		draw_ylines(t_map *map, t_point **p_matrix)
 		i++;
 	}
 }
+
 void		draw_xlines(t_map *map, t_point **p_matrix)
 {
 	int i;
