@@ -36,7 +36,6 @@ void	show_p_matrix(t_map *map, t_point **p_matrix)
 	}
 }
 
-
 void	show_map(t_map *map)
 {
 	int i;

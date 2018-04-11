@@ -52,9 +52,13 @@ int			deal_key(int keycode, void *map)
 	if (keycode == 78) // - key ZOOM OUT
 		new_map->lxy -= 10;
 	if (keycode == 13) // w key
-		new_map->radx += (10 * M_PI / 180); // intentar hacer el cambio mas tarde
+		new_map->radx += (10 * M_PI / 180);// intentar hacer el cambio mas tarde
+	if (keycode == 15) // r key
+		new_map->radz += (10 * M_PI / 180); 
+	if (keycode == 17) // t key
+		new_map->radz -= (10 * M_PI / 180); 
 	if (keycode == 1) // s key
-		new_map->radx -= (10 * M_PI / 180); // intentar hacer el cambio mas tarde
+		new_map->radx -= (10 * M_PI / 180);
 		//rotate_x(new_map, new_map->p_matrix, 30 * M_PI / 180);
 	if (keycode == 0) // a key
 		new_map->rady -= (10 * M_PI / 180);

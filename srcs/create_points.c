@@ -30,6 +30,7 @@ void			ft_new_matrix(t_map *map, t_point **p_matrix)
 			p_matrix[i][j].x -= (map->nb_col / 2) *  map->lxy;
 			rotate_x(&p_matrix[i][j].y, &p_matrix[i][j].z, map->radx);
 			rotate_y(&p_matrix[i][j].x, &p_matrix[i][j].z, map->rady);
+			rotate_z(&p_matrix[i][j].x, &p_matrix[i][j].y, map->radz);
 			p_matrix[i][j].y += (map->nb_row / 2) *  map->lxy;
 			p_matrix[i][j].x += (map->nb_col / 2) *  map->lxy;
 			p_matrix[i][j].x += map->tx;
@@ -81,12 +82,8 @@ static t_point **alloc_point_matrix(t_map *map)
 
 int		       create_points(t_map *map)
 {
-
 	t_point **p_matrix;
-	//starting points
-	map->tx =  WIDTH * 0.3;
-	map->ty = HEIGHT * 0.2;
-	//lenght of lines
+
 	if (map->nb_col > map->nb_row)
 		map->lxy = ((WIDTH * 0.5) / (map->nb_col));
 	else
@@ -98,7 +95,6 @@ int		       create_points(t_map *map)
 
 	draw_xlines(map, map->p_matrix);
 	draw_ylines(map, map->p_matrix);
-	//show_p_matrix(map, map->p_matrix);
-	//draw_ylines(map, p_matrix);
+
 	return (1);
 }

@@ -35,6 +35,17 @@ void		rotate_y(float *x, float *z, float rad)
 	*z = z0 * cos(rad) - x0 * sin(rad);
 }
 
+void		rotate_z(float *x, float *y, float rad)
+{
+	float x0;
+	float y0;
+
+	x0 = *x;
+	y0 = *y;
+	*x = x0 * cos(rad) - y0 * sin(rad);
+	*y = x0 * sin(rad) + y0 * cos(rad);
+}
+
 
 // void		rotate_x(t_map *map, t_point **p_matrix, float rad)
 // {

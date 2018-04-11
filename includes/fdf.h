@@ -68,7 +68,6 @@ typedef struct 		s_map
 int 				main(int ac, char **av);
 void				show_map(t_map *map);
 void				show_p_matrix(t_map *map, t_point **p_matrix);
-void 				print_2dmap(t_map *map);
 int					create_points(t_map *map);
 int					ft_error(char *str, int rtn_value);
 int					ft_parser(t_map *map);
@@ -80,8 +79,7 @@ void				ft_new_matrix(t_map *map, t_point **p_matrix);
 
 void		rotate_y(float *x, float *z, float rad);
 void		rotate_x(float *y, float *z, float rad);
-void		scaling(t_map *map, t_point **p_matrix, int scal);
-void		add_height(t_map *map, t_point **p_matrix, int h);
+void		rotate_z(float *x, float *y, float rad);
 /*
 **----------GEOMETRIC TRANSFORMATIONS-------------------------------
 */
