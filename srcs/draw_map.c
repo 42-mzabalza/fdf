@@ -44,8 +44,11 @@ static void plot_line(t_map *map, t_point p1, t_point p2)
 	float err = dx + dy;
 	float e2; /* error value e_xy */
  	
+ 	color =  0xcccccc;
  	if (p1.color == p2.color && p1.color == 0xff0000)
- 		color = 0xff0000;
+ 		color = 0x990000;
+ 	if (p1.color != p2.color)
+ 		color = 0x595959;
  	
 	while (1)  /* loop */
 	{
