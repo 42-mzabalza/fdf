@@ -32,8 +32,9 @@ typedef struct 		s_point
 	float			x;
 	float			y;
 	float			z;
-	int				i;
+	int				i; //no lo uso
 	int				j;
+	int				color;
 
 }					t_point;
 
@@ -47,6 +48,9 @@ typedef struct 		s_map
 	void 			*win_ptr;
 	int				fd;
 	int				scal;
+	void			*image;
+	int				*img_str;
+	int				line_size;
 	// punto inicial
 	int				tx;
 	int				ty;
@@ -86,6 +90,11 @@ void		rotate_z(float *x, float *y, float rad);
 void		draw_points(t_map *map, t_point **p_matrix);
 void		draw_xlines(t_map *map, t_point **p_matrix);
 void		draw_ylines(t_map *map, t_point **p_matrix);
+/*
+**----------EVENT MANAGEMENT-------------------------------
+*/
+void		fill_img_str(int *img_str, int x, int y, int color);
+void	clear_img_str(t_map *map);
 /*
 **----------EVENT MANAGEMENT-------------------------------
 */

@@ -55,6 +55,9 @@ static void	insert_p_matrix(t_map *map, t_point **p_matrix)
 			p_matrix[i][j].z = map->matrix[i][j];
 			p_matrix[i][j].x = (j * map->lxy) + map->tx;
 			p_matrix[i][j].y = (i * map->lxy) + map->ty;
+			p_matrix[i][j].color = 0x000000;
+			if (p_matrix[i][j].z)
+				p_matrix[i][j].color = 0xff0000;
 			p_matrix[i][j].i = i;
 			p_matrix[i][j].j = j;
 			j++;
@@ -80,8 +83,16 @@ static t_point **alloc_point_matrix(t_map *map)
 	return (p_matrix);
 }
 
+/*
+** char *img_data =  mlx_get_data_addr(img_ptr, &bpp, &size_line, &endian);
+** bpp = 32 -> a pixel is coded on 4 char, worth 8 bits each
+** size_line = WIDTH line of pixel, times 4
+** endian = 0 or 1, depending oN the architecture of the computer
+*/
+
 int		       create_points(t_map *map)
 {
+
 	t_point **p_matrix;
 
 	if (map->nb_col > map->nb_row)
@@ -92,9 +103,12 @@ int		       create_points(t_map *map)
 		return (0);
 	insert_p_matrix(map, p_matrix);
 	map->p_matrix = p_matrix;
-
+	clear_img_str(map);
 	draw_xlines(map, map->p_matrix);
 	draw_ylines(map, map->p_matrix);
+
+	mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, map->image, 0, 0);
+	
 
 	return (1);
 }

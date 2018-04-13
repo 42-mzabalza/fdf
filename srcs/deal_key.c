@@ -65,9 +65,11 @@ int			deal_key(int keycode, void *map)
 	if (keycode == 2) // d key
 		new_map->rady += (10 * M_PI / 180); // intentar hacer el cambio mas tarde
 	ft_clear(new_map);
+	clear_img_str(map);
 	ft_new_matrix(new_map, new_map->p_matrix);
 	draw_xlines(new_map, new_map->p_matrix);
 	draw_ylines(new_map, new_map->p_matrix);
+	mlx_put_image_to_window(new_map->mlx_ptr, new_map->win_ptr, new_map->image, 0, 0);
 	//show_p_matrix(map, new_map->p_matrix);
 	ft_putchar('\n');
 	return (0);

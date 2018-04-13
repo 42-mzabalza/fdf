@@ -22,24 +22,34 @@
 
 //METER ERROR EN LIBFT
 
+static  void	image_init(t_map *map)
+{
+	int bpp;
+	int endian;
+	int l_size;
+
+	map->image = mlx_new_image(map->mlx_ptr, WIDTH, HEIGHT);
+	map->img_str = (int *)mlx_get_data_addr(map->image, &bpp, &l_size, &endian);
+}
+
 static  int		fdf_init(t_map *map, char *doc)
 {
 	map->doc = doc;
 	map->fd = open(map->doc, O_RDONLY);
-	ft_putnbr(map->fd);
 	if (map->fd == -1)
 		return (0);
-	ft_putchar('z');
 	map->height = 1;
 	map->radx = 0.0;
 	map->rady = 0.0;
 	map->radz = 0.0;
 	map->tx = WIDTH * 0.3;
 	map->ty = HEIGHT * 0.2;
+	map->line_size = WIDTH * 4;
 	map->nb_col = 0;
 	map->nb_row = 0;
 	map->mlx_ptr = mlx_init();
 	map->win_ptr = mlx_new_window(map->mlx_ptr, WIDTH, HEIGHT, "prueba mlx");
+	image_init(map);
 	return (1);
 }
 
@@ -58,6 +68,7 @@ int 			main(int ac, char **av)
 	if (!(ft_parser(&map)))
 		return (ft_error("Error", 1));
 	create_points(&map);
+
 	mlx_key_hook(map.win_ptr, deal_key, &map);
 	//mlx_mouse_hook(map.win_ptr,gere_mouse,0);
 	mlx_loop(map.mlx_ptr);

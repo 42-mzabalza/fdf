@@ -12,7 +12,6 @@
 
 #include "../includes/fdf.h"
 
-
 void		draw_points(t_map *map, t_point **p_matrix)
 {
 	int i;
@@ -37,7 +36,7 @@ static void plot_line(t_map *map, t_point p1, t_point p2)
 	int y0 = p1.y;
 	int x1 = p2.x;
 	int y1 = p2.y;
-	int colour;
+	int color;
 	float dx = ft_abs(x1 - x0);
 	float sx = x0 < x1 ? 1 : -1;
 	float dy = -(ft_abs(y1 - y0));
@@ -45,22 +44,13 @@ static void plot_line(t_map *map, t_point p1, t_point p2)
 	float err = dx + dy;
 	float e2; /* error value e_xy */
  	
- 	// p1.y = y0 * cos(map->radx) - z0 * sin(map->radx);
-	// map->p_matrix[i][j].z = y0 * sin(rad) + z0 * cos(rad);
- 	colour = 0x999999;
- 	if (map->matrix[p1.i][p1.j] || map->matrix[p2.i][p2.j])
- 		colour = 0x444444;
- 	if (map->matrix[p1.i][p1.j] && map->matrix[p2.i][p2.j])
- 		colour = 0xCC0000;
+ 	if (p1.color == p2.color && p1.color == 0xff0000)
+ 		color = 0xff0000;
  	
- 	// if (p1.z || p2.z)
- 	// 	colour = 0x444444;
- 	// if (p1.z && p2.z)
- 	// 	colour = 0xCC0000;
 	while (1)  /* loop */
 	{
-
-		mlx_pixel_put(map->mlx_ptr, map->win_ptr, (int)x0, (int)y0, colour);
+		//mlx_pixel_put(map->mlx_ptr, map->win_ptr, (int)x0, (int)y0, color);
+		fill_img_str(map->img_str, (int)x0, (int)y0, color);
 		if (x0 == x1 && y0 == y1) //aqui me podria dar problemas el float
 			break;
 		e2 = 2 * err;
