@@ -12,6 +12,19 @@
 
 #include "../includes/fdf.h"
 
+static void	get_z_range(t_map *map, int z, int i, int j)
+{
+	if (!i && !j)
+	{
+		map->z_range[0] = z;
+		map->z_range[1] = z;
+	}
+	if (z > map->z_range[1])
+		map->z_range[1] = z;
+	if (z < map->z_range[0])
+		map->z_range[0] = z;
+}
+
 static int	alloc_map(t_map *map)
 {
 	int 	i;
@@ -58,6 +71,7 @@ static int	store_map(t_map *map)
 			if (!(ft_isnum(tab[i])))
 				return (0);
 			map->matrix[j][i] = ft_atoi(tab[i]);
+			get_z_range(map, map->matrix[j][i], i, j);
 			free(tab[i]);
 			i++;
 		}
@@ -65,7 +79,9 @@ static int	store_map(t_map *map)
 		free(line);
 		j++;
 	}
-	close(map->fd);
+	// ft_putnbr(map->z_range[0]);
+	// ft_putchar(':');
+	// ft_putnbr(map->z_range[1]);
 	return (1);
 }
 
@@ -78,5 +94,6 @@ int			ft_parser(t_map *map)
 		return (0);
 	if (!store_map(map))
 		return (0);
+	close(map->fd);
 	return (1);
 }

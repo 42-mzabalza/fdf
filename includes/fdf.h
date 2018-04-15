@@ -17,8 +17,8 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define WIDTH 1500
-# define HEIGHT 1000
+# define WIDTH 2000
+# define HEIGHT 1300
 
 /*
 **map->size		size of output window
@@ -34,7 +34,7 @@ typedef struct 		s_point
 	float			z;
 	int				i; //no lo uso
 	int				j;
-	int				color;
+	float			color;
 
 }					t_point;
 
@@ -57,7 +57,7 @@ typedef struct 		s_map
 	// distancia entre puntos
 	int				lxy;
 	//altura
-	int				height;
+	float				height;
 	
 	int				p1[2];
 	int				p2[2];
@@ -65,6 +65,7 @@ typedef struct 		s_map
 	int				nb_row;
 	int				**matrix;
 	t_point			**p_matrix;
+	int				z_range[2];
 
 }					t_map;
 
@@ -99,4 +100,10 @@ void	clear_img_str(t_map *map);
 **----------EVENT MANAGEMENT-------------------------------
 */
 int			deal_key(int key, void *param);
+/*
+**----------EVENT MANAGEMENT-------------------------------
+*/
+float	select_color(t_map *map, int z);
+float	color_gradient(t_point p1, t_point p2, float dx, float dy);
+
 #endif

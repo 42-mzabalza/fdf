@@ -34,23 +34,23 @@ int			deal_key(int keycode, void *map)
 		exit(1);
 	}
 	if (keycode == 124) // RIGHT ARROW
-		new_map->tx += 30;
+		new_map->tx += 50;
 	if (keycode == 123) // LEFT ARROW
-		new_map->tx -= 30;
+		new_map->tx -= 50;
 	if (keycode == 126) // UP ARROW
-		new_map->ty -= 30;
+		new_map->ty -= 50;
 	if (keycode == 125) // DOWN ARROW
-		new_map->ty += 30;
-	if (keycode == 46) // m key
-		new_map->height += 0.5;
-	if (keycode == 45) // n key
-		new_map->height -= 0.5;
+		new_map->ty += 50;
+	// if (keycode == 46) // m key
+	// 	new_map->height += 0.1;
+	// if (keycode == 45) // n key
+	// 	new_map->height -= 0.1;
 	// if (keycode == 15) // r key - rotate
 	// 	rotate(new_map, new_map->p_matrix, 30 * M_PI / 180);
 	if (keycode == 69) // + key ZOOM IN
-		new_map->lxy += 10;
+		new_map->lxy += 1;
 	if (keycode == 78) // - key ZOOM OUT
-		new_map->lxy -= 10;
+		new_map->lxy -= 1;
 	if (keycode == 13) // w key
 		new_map->radx += (10 * M_PI / 180);// intentar hacer el cambio mas tarde
 	if (keycode == 15) // r key

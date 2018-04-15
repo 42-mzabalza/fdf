@@ -15,7 +15,8 @@ SRC = srcs/fdf.c\
 		srcs/draw_map.c\
 		srcs/geometric_transf.c\
 		srcs/deal_key.c\
-		srcs/fill_img_str.c
+		srcs/fill_img_str.c\
+		srcs/select_color.c
 
 OBJ		= $(SRC:.c=.o)
 

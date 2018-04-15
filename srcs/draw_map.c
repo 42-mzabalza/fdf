@@ -36,24 +36,28 @@ static void plot_line(t_map *map, t_point p1, t_point p2)
 	int y0 = p1.y;
 	int x1 = p2.x;
 	int y1 = p2.y;
-	int color;
+	float color;
 	float dx = ft_abs(x1 - x0);
 	float sx = x0 < x1 ? 1 : -1;
 	float dy = -(ft_abs(y1 - y0));
 	float sy = y0 < y1 ? 1 : -1; 
 	float err = dx + dy;
 	float e2; /* error value e_xy */
- 	
- 	color =  0xcccccc;
- 	if (p1.color == p2.color && p1.color == 0xff0000)
- 		color = 0x990000;
- 	if (p1.color != p2.color)
- 		color = 0x595959;
- 	
+	float gradient;
+
+ 	color = p1.color;
+
+ 	// if (p1.color == p2.color)
+ 	//  	color = p1.color;
+ 	// if (p1.color != p2.color)
+ 	// 	color = 0x595959;
+ 	gradient = color_gradient(p1, p2, dx, -dy);
+	// ft_putnbr(gradient);
+	// ft_putchar('\n');
 	while (1)  /* loop */
 	{
 		//mlx_pixel_put(map->mlx_ptr, map->win_ptr, (int)x0, (int)y0, color);
-		fill_img_str(map->img_str, (int)x0, (int)y0, color);
+		fill_img_str(map->img_str, (int)x0, (int)y0, (int)color);
 		if (x0 == x1 && y0 == y1) //aqui me podria dar problemas el float
 			break;
 		e2 = 2 * err;
@@ -61,11 +65,13 @@ static void plot_line(t_map *map, t_point p1, t_point p2)
 		{ 
 			err += dy;
 			x0 += sx; /* e_xy+e_x > 0 */
+			color+= gradient;
 		} 
 		if (e2 <= dx)
 		{ 
 			err += dx;
 			y0 += sy; /* e_xy+e_y < 0 */
+			color+= gradient;
 		}
 	}
 }

@@ -55,9 +55,10 @@ static void	insert_p_matrix(t_map *map, t_point **p_matrix)
 			p_matrix[i][j].z = map->matrix[i][j];
 			p_matrix[i][j].x = (j * map->lxy) + map->tx;
 			p_matrix[i][j].y = (i * map->lxy) + map->ty;
-			p_matrix[i][j].color = 0x000000;
-			if (p_matrix[i][j].z)
-				p_matrix[i][j].color = 0xff0000;
+			p_matrix[i][j].color = select_color(map, p_matrix[i][j].z);
+			// p_matrix[i][j].color = 0xffffff;
+			// if (p_matrix[i][j].z)
+			// 	p_matrix[i][j].color = 0xff0000;
 			p_matrix[i][j].i = i;
 			p_matrix[i][j].j = j;
 			j++;
