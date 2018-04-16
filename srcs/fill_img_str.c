@@ -6,7 +6,7 @@
 /*   By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 15:21:34 by mzabalza          #+#    #+#             */
-/*   Updated: 2018/04/12 15:21:43 by mzabalza         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:26:50 by mzabalza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ void	clear_img_str(t_map *map)
 	i = 0;
 	while (i < WIDTH * HEIGHT)
 	{
-		map->img_str[i] = 0x000000; //noir
+		map->img_str[i] = BLACK;
 		i++;
 	}
-
 }
 
 void	fill_img_str(int *img_str, int x, int y, int color)

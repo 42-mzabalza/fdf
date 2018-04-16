@@ -5,7 +5,7 @@ LIBFT = libft/libft.a
 
 CC = clang
 
-FLAGS = -Wall -Werror -Wextra -I./includes
+FLAGS = -Wall -Werror -Wextra -g3 -I./includes
 
 SRC = srcs/fdf.c\
 		srcs/ft_parser.c\
@@ -16,7 +16,8 @@ SRC = srcs/fdf.c\
 		srcs/geometric_transf.c\
 		srcs/deal_key.c\
 		srcs/fill_img_str.c\
-		srcs/select_color.c
+		srcs/select_color.c\
+		srcs/draw_info.c
 
 OBJ		= $(SRC:.c=.o)
 

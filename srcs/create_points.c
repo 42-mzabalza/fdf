@@ -6,7 +6,7 @@
 /*   By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/02 20:30:44 by mzabalza          #+#    #+#             */
-/*   Updated: 2018/04/02 20:30:59 by mzabalza         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:03:56 by mzabalza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void			ft_new_matrix(t_map *map, t_point **p_matrix)
 			p_matrix[i][j].x = (j * map->lxy);
 			p_matrix[i][j].y = (i * map->lxy);
 			p_matrix[i][j].z = map->matrix[i][j] * map->lxy * map->height;
-			p_matrix[i][j].y -= (map->nb_row / 2) *  map->lxy;
-			p_matrix[i][j].x -= (map->nb_col / 2) *  map->lxy;
+			p_matrix[i][j].y -= (map->nb_row / 2) * map->lxy;
+			p_matrix[i][j].x -= (map->nb_col / 2) * map->lxy;
 			rotate_x(&p_matrix[i][j].y, &p_matrix[i][j].z, map->radx);
 			rotate_y(&p_matrix[i][j].x, &p_matrix[i][j].z, map->rady);
 			rotate_z(&p_matrix[i][j].x, &p_matrix[i][j].y, map->radz);
-			p_matrix[i][j].y += (map->nb_row / 2) *  map->lxy;
-			p_matrix[i][j].x += (map->nb_col / 2) *  map->lxy;
+			p_matrix[i][j].y += (map->nb_row / 2) * map->lxy;
+			p_matrix[i][j].x += (map->nb_col / 2) * map->lxy;
 			p_matrix[i][j].x += map->tx;
 			p_matrix[i][j].y += map->ty;
 			j++;
@@ -41,7 +41,7 @@ void			ft_new_matrix(t_map *map, t_point **p_matrix)
 	}
 }
 
-static void	insert_p_matrix(t_map *map, t_point **p_matrix)
+static void		insert_p_matrix(t_map *map, t_point **p_matrix)
 {
 	int i;
 	int j;
@@ -56,23 +56,18 @@ static void	insert_p_matrix(t_map *map, t_point **p_matrix)
 			p_matrix[i][j].x = (j * map->lxy) + map->tx;
 			p_matrix[i][j].y = (i * map->lxy) + map->ty;
 			p_matrix[i][j].color = select_color(map, p_matrix[i][j].z);
-			// p_matrix[i][j].color = 0xffffff;
-			// if (p_matrix[i][j].z)
-			// 	p_matrix[i][j].color = 0xff0000;
-			p_matrix[i][j].i = i;
-			p_matrix[i][j].j = j;
 			j++;
 		}
 		i++;
 	}
 }
 
-static t_point **alloc_point_matrix(t_map *map)
+static t_point	**alloc_point_matrix(t_map *map)
 {
 	t_point **p_matrix;
 	int		i;
 
-	if(!(p_matrix = (t_point **)malloc(sizeof(t_point *) * map->nb_row)))
+	if (!(p_matrix = (t_point **)malloc(sizeof(t_point *) * map->nb_row)))
 		return (0);
 	i = 0;
 	while (i < map->nb_row)
@@ -91,25 +86,18 @@ static t_point **alloc_point_matrix(t_map *map)
 ** endian = 0 or 1, depending oN the architecture of the computer
 */
 
-int		       create_points(t_map *map)
+int				create_points(t_map *map)
 {
-
-	t_point **p_matrix;
-
 	if (map->nb_col > map->nb_row)
 		map->lxy = ((WIDTH * 0.5) / (map->nb_col));
 	else
 		map->lxy = ((HEIGHT * 0.5) / (map->nb_row));
-	if (!(p_matrix = alloc_point_matrix(map)))
+	if (!(map->p_matrix = alloc_point_matrix(map)))
 		return (0);
-	insert_p_matrix(map, p_matrix);
-	map->p_matrix = p_matrix;
+	insert_p_matrix(map, map->p_matrix);
 	clear_img_str(map);
 	draw_xlines(map, map->p_matrix);
-	draw_ylines(map, map->p_matrix);
-
 	mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, map->image, 0, 0);
-	
-
+	draw_info(map);
 	return (1);
 }

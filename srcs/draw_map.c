@@ -6,13 +6,13 @@
 /*   By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 19:00:46 by mzabalza          #+#    #+#             */
-/*   Updated: 2018/04/06 19:00:48 by mzabalza         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:20:21 by mzabalza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void		draw_points(t_map *map, t_point **p_matrix)
+void		draw_points(t_map *map, t_point **p_mtrx)
 {
 	int i;
 	int j;
@@ -23,74 +23,54 @@ void		draw_points(t_map *map, t_point **p_matrix)
 		j = 0;
 		while (j < (map->nb_col))
 		{
-			mlx_pixel_put(map->mlx_ptr, map->win_ptr, p_matrix[i][j].x, p_matrix[i][j].y, 0xFFFFFF);
+			mlx_pixel_put(map->mlx_ptr, map->win_ptr, p_mtrx[i][j].x
+					, p_mtrx[i][j].y, WHITE);
 			j++;
 		}
 		i++;
 	}
 }
 
-static void plot_line(t_map *map, t_point p1, t_point p2)
+static void	init_plot_values(t_breshm_line *line, t_point p1, t_point p2)
 {
-	int x0 = p1.x;
-	int y0 = p1.y;
-	int x1 = p2.x;
-	int y1 = p2.y;
-	float color;
-	float dx = ft_abs(x1 - x0);
-	float sx = x0 < x1 ? 1 : -1;
-	float dy = -(ft_abs(y1 - y0));
-	float sy = y0 < y1 ? 1 : -1; 
-	float err = dx + dy;
-	float e2; /* error value e_xy */
-	float gradient;
+	line->p0[0] = p1.x;
+	line->p0[1] = p1.y;
+	line->p1[0] = p2.x;
+	line->p1[1] = p2.y;
+	line->dxy[0] = ft_abs(line->p1[0] - line->p0[0]);
+	line->dxy[1] = -ft_abs(line->p1[1] - line->p0[1]);
+	line->sxy[0] = line->p0[0] < line->p1[0] ? 1 : -1;
+	line->sxy[1] = line->p0[1] < line->p1[1] ? 1 : -1;
+	line->gradient = color_gradient(p1, p2, line->dxy[0], -(line->dxy[1]));
+	line->color = p1.color;
+}
 
- 	color = p1.color;
+static void	plot_line(t_map *map, t_point p1, t_point p2)
+{
+	t_breshm_line	line;
+	float			err;
+	float			e2;
 
- 	// if (p1.color == p2.color)
- 	//  	color = p1.color;
- 	// if (p1.color != p2.color)
- 	// 	color = 0x595959;
- 	gradient = color_gradient(p1, p2, dx, -dy);
-	// ft_putnbr(gradient);
-	// ft_putchar('\n');
-	while (1)  /* loop */
+	init_plot_values(&line, p1, p2);
+	err = line.dxy[0] + line.dxy[1];
+	while (1)
 	{
-		//mlx_pixel_put(map->mlx_ptr, map->win_ptr, (int)x0, (int)y0, color);
-		fill_img_str(map->img_str, (int)x0, (int)y0, (int)color);
-		if (x0 == x1 && y0 == y1) //aqui me podria dar problemas el float
-			break;
+		fill_img_str(map->img_str, line.p0[0], line.p0[1], (int)line.color);
+		if ((int)line.p0[0] == line.p1[0] && line.p0[1] == line.p1[1])
+			break ;
 		e2 = 2 * err;
-		if (e2 >= dy)
-		{ 
-			err += dy;
-			x0 += sx; /* e_xy+e_x > 0 */
-			color+= gradient;
-		} 
-		if (e2 <= dx)
-		{ 
-			err += dx;
-			y0 += sy; /* e_xy+e_y < 0 */
-			color+= gradient;
-		}
-	}
-}
-
-void		draw_ylines(t_map *map, t_point **p_matrix)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < (map->nb_col))
-	{
-		j = 0;
-		while (j < (map->nb_row) - 1)
+		if (e2 >= line.dxy[1])
 		{
-			plot_line(map, p_matrix[j][i], p_matrix[j + 1][i]);
-			j++;
+			err += line.dxy[1];
+			line.p0[0] += (int)line.sxy[0];
+			line.color += line.gradient;
 		}
-		i++;
+		if (e2 <= line.dxy[0])
+		{
+			err += line.dxy[0];
+			line.p0[1] += (int)line.sxy[1];
+			line.color += line.gradient;
+		}
 	}
 }
 
@@ -103,9 +83,12 @@ void		draw_xlines(t_map *map, t_point **p_matrix)
 	while (i < (map->nb_row))
 	{
 		j = 0;
-		while (j < (map->nb_col) - 1)
+		while (j < (map->nb_col))
 		{
-			plot_line(map, p_matrix[i][j], p_matrix[i][j + 1]);
+			if (j < map->nb_col - 1)
+				plot_line(map, p_matrix[i][j], p_matrix[i][j + 1]);
+			if (i < map->nb_row - 1)
+				plot_line(map, p_matrix[i][j], p_matrix[i + 1][j]);
 			j++;
 		}
 		i++;
