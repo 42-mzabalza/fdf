@@ -12,20 +12,24 @@
 
 #include "../includes/fdf.h"
 
-static void	draw_info2(t_map *map)
+static void	draw_info2(t_map *map, char *str)
 {
 	str = "ZOOM IN / OUT: ";
 	mlx_string_put(map->mlx_ptr, map->win_ptr, 1500, 110, 0x0FFFFFF, str);
 	str = "+ / -";
 	mlx_string_put(map->mlx_ptr, map->win_ptr, 1700, 110, 0x0FFFFFF, str);
-	str = "RESET VALUES: ";
+	str = "CHANGE SLOPE: ";
 	mlx_string_put(map->mlx_ptr, map->win_ptr, 1500, 130, 0x0FFFFFF, str);
-	str = "SPACE";
+	str = "M, N";
 	mlx_string_put(map->mlx_ptr, map->win_ptr, 1700, 130, 0x0FFFFFF, str);
-	str = "QUIT PROGRAM";
+	str = "RESET VALUES: ";
 	mlx_string_put(map->mlx_ptr, map->win_ptr, 1500, 150, 0x0FFFFFF, str);
-	str = "ESC";
+	str = "SPACE";
 	mlx_string_put(map->mlx_ptr, map->win_ptr, 1700, 150, 0x0FFFFFF, str);
+	str = "QUIT PROGRAM";
+	mlx_string_put(map->mlx_ptr, map->win_ptr, 1500, 170, 0x0FFFFFF, str);
+	str = "ESC";
+	mlx_string_put(map->mlx_ptr, map->win_ptr, 1700, 170, 0x0FFFFFF, str);
 }
 
 void		draw_info(t_map *map)
@@ -48,5 +52,5 @@ void		draw_info(t_map *map)
 	mlx_string_put(map->mlx_ptr, map->win_ptr, 1500, 90, 0x0FFFFFF, str);
 	str = "R, T";
 	mlx_string_put(map->mlx_ptr, map->win_ptr, 1700, 90, 0x0FFFFFF, str);
-	draw_info2(map);
+	draw_info2(map, str);
 }
