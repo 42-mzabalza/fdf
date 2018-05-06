@@ -31,24 +31,20 @@ char		*ft_itoa(int n)
 {
 	int		len;
 	char	*num;
-	int		i;
-	int		temp;
 	int		sign;
 
 	if (n == -2147483648)
 		return (ft_strdup("-2147483648"));
 	sign = n;
-	temp = n;
 	len = numlen(n);
 	if (n < 0)
 		n *= -1;
 	if (!(num = (char *)malloc(sizeof(char) * (len))))
 		return (NULL);
-	num[len - 1] = '\0';
-	i = len - 2;
+	num[--len] = '\0';
 	while (len--)
 	{
-		num[i--] = (n % 10) + 48;
+		num[len] = n % 10 + 48;
 		n = n / 10;
 	}
 	if (sign < 0)
