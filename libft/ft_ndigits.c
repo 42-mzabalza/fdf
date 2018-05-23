@@ -6,14 +6,16 @@
 /*   By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 17:43:03 by mzabalza          #+#    #+#             */
-/*   Updated: 2018/03/28 17:49:03 by mzabalza         ###   ########.fr       */
+/*   Updated: 2018/05/07 14:54:08 by mzabalza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
 /*
 **Returns number of digts of number nb (nb = 0, 1 digit)
 */
+
 int		ft_ndigits(int nb)
 {
 	int rtn;

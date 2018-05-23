@@ -12,49 +12,25 @@
 
 #include "../includes/fdf.h"
 
-void		free_matrix(t_map *map, int m, int p)
-{
-	int i;
-
-	i = 0;
-	while (i < (map->nb_row))
-	{
-		if (m)
-			free(map->matrix[i]);
-		if (p)
-			free(map->p_matrix[i]);
-		i++;
-	}
-	if (m)
-		free(map->matrix);
-	if (p)
-		free(map->p_matrix);
-}
-
 static void	reset_matrix(t_map *map)
 {
+	map->persp = 0;
 	map->height = 1;
 	map->radx = 0.0;
 	map->rady = 0.0;
 	map->radz = 0.0;
 	map->tx = WIDTH * 0.3;
 	map->ty = HEIGHT * 0.2;
-	map->line_size = WIDTH * 4;
 	map->lxy = ((WIDTH * 0.5) / (map->nb_col));
 }
 
 static void	key_action(int keycode, t_map *map)
 {
 	if (keycode == 53 || keycode == 50)
-	{
-		mlx_destroy_image(map->mlx_ptr, map->image);
-		mlx_destroy_window(map->mlx_ptr, map->win_ptr);
-		free_matrix(map, 1, 1);
-		if (keycode == 50)
-			while (1)
-				;
-		exit(1);
-	}
+		exit_fdf(keycode, map);
+	if (keycode == 35)
+		map->persp = 1;
+	map->color += (keycode == 8 ? 5 + (8 * 256) + (12 * 65536) : 0);
 	keycode == 49 ? reset_matrix(map) : 0;
 	map->tx += (keycode == 124 ? 50 : 0);
 	map->tx += (keycode == 123 ? -50 : 0);
@@ -91,6 +67,7 @@ int			deal_key(int keycode, void *map)
 	key_action(keycode, map);
 	ft_clear(new_map);
 	ft_new_matrix(new_map, new_map->p_matrix);
+	new_map->persp == 1 ? add_perspective(new_map, new_map->p_matrix) : 1;
 	draw_xlines(new_map, new_map->p_matrix);
 	mlx_put_image_to_window(new_map->mlx_ptr, new_map->win_ptr
 		, new_map->image, 0, 0);

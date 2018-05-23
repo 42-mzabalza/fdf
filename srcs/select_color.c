@@ -6,7 +6,7 @@
 /*   By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 18:44:20 by mzabalza          #+#    #+#             */
-/*   Updated: 2018/04/16 20:33:22 by mzabalza         ###   ########.fr       */
+/*   Updated: 2018/05/07 13:38:23 by mzabalza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ float	select_color(t_map *map, int z)
 	z -= map->z_range[0];
 	g = (z * 255) / range_len;
 	b = (z * 255) / range_len;
-	if (map->dark < 255)
-		r -= map->dark;
 	int_color = b + (g * 256) + (r * 65536);
-	// int_color = WHITE;
-	// z = (100 * z) / range_len ;
-	// if (z < 10)
-	// 	int_color = GREEN;
-	// else if (z < 67)
-	// 	int_color = BROWN;
 	return (int_color);
 }

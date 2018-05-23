@@ -37,6 +37,7 @@ typedef struct		s_point
 
 typedef struct		s_map
 {
+	int				persp;
 	float			radx;
 	float			rady;
 	float			radz;
@@ -44,10 +45,8 @@ typedef struct		s_map
 	void			*mlx_ptr;
 	void			*win_ptr;
 	int				fd;
-	int				scal;
 	void			*image;
 	int				*img_str;
-	int				line_size;
 	int				tx;
 	int				ty;
 	int				lxy;
@@ -57,7 +56,7 @@ typedef struct		s_map
 	int				**matrix;
 	t_point			**p_matrix;
 	int				z_range[2];
-	int				dark;
+	int				color;
 
 }					t_map;
 
@@ -84,12 +83,15 @@ int					ft_parser(t_map *map);
 int					get_next_line(const int fd, char **line);
 void				ft_new_matrix(t_map *map, t_point **p_matrix);
 void				free_matrix(t_map *map, int m, int p);
+void				exit_fdf(int keycode, t_map *map);
 /*
 **----------GEOMETRIC TRANSFORMATIONS------------------------------------------
 */
+void				ft_rotate(t_map *map, t_point **p_matrix, int i, int j);
 void				rotate_y(float *x, float *z, float rad);
 void				rotate_x(float *y, float *z, float rad);
 void				rotate_z(float *x, float *y, float rad);
+void				add_perspective(t_map *map, t_point **p_matrix);
 /*
 **----------DRAWING -----------------------------------------------------------
 */

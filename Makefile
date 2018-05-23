@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/05/07 15:18:34 by mzabalza          #+#    #+#              #
+#    Updated: 2018/05/07 15:18:56 by mzabalza         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME = fdf
 
@@ -17,7 +28,8 @@ SRC = srcs/fdf.c\
 		srcs/deal_key.c\
 		srcs/fill_img_str.c\
 		srcs/select_color.c\
-		srcs/draw_info.c
+		srcs/draw_info.c\
+		srcs/add_perspective.c
 
 OBJ		= $(SRC:.c=.o)
 

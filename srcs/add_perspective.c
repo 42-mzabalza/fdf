@@ -1,44 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isnum.c                                         :+:      :+:    :+:   */
+/*   add_perspective.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/07 14:55:04 by mzabalza          #+#    #+#             */
-/*   Updated: 2018/05/07 14:55:45 by mzabalza         ###   ########.fr       */
+/*   Created: 2018/05/07 11:53:51 by mzabalza          #+#    #+#             */
+/*   Updated: 2018/05/07 14:48:04 by mzabalza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/fdf.h"
 
-/*
-**RETURN  0 no number
-**RETURN  1 positive number
-**RETURN -1	negative number
-*/
-
-int		ft_isnum(char *str)
+void	add_perspective(t_map *map, t_point **p_m)
 {
 	int i;
-	int neg;
+	int j;
 
-	neg = 0;
 	i = 0;
-	if (str == NULL)
-		return (0);
-	if (str[i] == '-')
+	while (i < (map->nb_row))
 	{
-		neg = 1;
+		j = 0;
+		while (j < (map->nb_col))
+		{
+			p_m[i][j].x = (p_m[i][j].x * 2000) / (3000 - p_m[i][j].z);
+			p_m[i][j].y = (p_m[i][j].y * 2000) / (3000 - p_m[i][j].z);
+			j++;
+		}
 		i++;
 	}
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	if (neg)
-		return (-1);
-	return (1);
 }

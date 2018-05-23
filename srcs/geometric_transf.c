@@ -44,3 +44,10 @@ void		rotate_z(float *x, float *y, float rad)
 	*x = x0 * cos(rad) - y0 * sin(rad);
 	*y = x0 * sin(rad) + y0 * cos(rad);
 }
+
+void		ft_rotate(t_map *map, t_point **p_matrix, int i, int j)
+{
+	rotate_x(&p_matrix[i][j].y, &p_matrix[i][j].z, map->radx);
+	rotate_y(&p_matrix[i][j].x, &p_matrix[i][j].z, map->rady);
+	rotate_z(&p_matrix[i][j].x, &p_matrix[i][j].y, map->radz);
+}

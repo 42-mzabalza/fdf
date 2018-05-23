@@ -6,7 +6,7 @@
 /*   By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 19:15:11 by mzabalza          #+#    #+#             */
-/*   Updated: 2018/02/03 15:52:00 by mzabalza         ###   ########.fr       */
+/*   Updated: 2018/05/07 14:54:26 by mzabalza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char		*ft_uimaxtoa_base(uintmax_t nb, int base)
 
 	ndigits = ft_ndigits(nb, base);
 	if (!(dst = (char *)malloc(sizeof(char) * (ndigits + 1))))
-		return(NULL);
+		return (NULL);
 	dst[ndigits] = '\0';
 	while (ndigits-- > 0)
 	{

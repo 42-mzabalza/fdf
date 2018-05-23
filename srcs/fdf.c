@@ -34,10 +34,9 @@ static int		fdf_init(t_map *map, char *doc)
 	map->radz = 0.0;
 	map->tx = WIDTH * 0.3;
 	map->ty = HEIGHT * 0.2;
-	map->line_size = WIDTH * 4;
 	map->nb_col = 0;
 	map->nb_row = 0;
-	map->dark = 0;
+	map->color = 0;
 	return (1);
 }
 

@@ -33,7 +33,8 @@ static int	alloc_map(t_map *map)
 
 	while (get_next_line(map->fd, &line) > 0)
 	{
-		tab = ft_strsplit(line, ' ');
+		if (!(tab = ft_strsplit(line, ' ')))
+			exit(1);
 		i = 0;
 		while (tab[i])
 		{
@@ -65,7 +66,8 @@ static int	store_map(t_map *map)
 	{
 		if (!(map->matrix[j] = (int *)malloc(sizeof(int) * (map->nb_col))))
 			return (0);
-		tab = ft_strsplit(line, ' ');
+		if (!(tab = ft_strsplit(line, ' ')))
+			exit(1);
 		i = 0;
 		while (tab[i])
 		{
@@ -93,5 +95,7 @@ int			ft_parser(t_map *map)
 	if (!store_map(map))
 		return (0);
 	close(map->fd);
+	if (!map->nb_col)
+		return (0);
 	return (1);
 }

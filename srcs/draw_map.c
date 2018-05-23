@@ -6,7 +6,7 @@
 /*   By: mzabalza <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/06 19:00:46 by mzabalza          #+#    #+#             */
-/*   Updated: 2018/04/16 15:20:21 by mzabalza         ###   ########.fr       */
+/*   Updated: 2018/05/07 14:52:18 by mzabalza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,13 @@ void		draw_points(t_map *map, t_point **p_mtrx)
 	}
 }
 
-static void	init_plot_values(t_breshm_line *line, t_point p1, t_point p2)
+static void	plot_values(t_map *map, t_breshm_line *line, t_point p1, t_point p2)
 {
+	if (map->color)
+	{
+		p1.color = map->color;
+		p2.color = map->color;
+	}
 	line->p0[0] = p1.x;
 	line->p0[1] = p1.y;
 	line->p1[0] = p2.x;
@@ -51,7 +56,7 @@ static void	plot_line(t_map *map, t_point p1, t_point p2)
 	float			err;
 	float			e2;
 
-	init_plot_values(&line, p1, p2);
+	plot_values(map, &line, p1, p2);
 	err = line.dxy[0] + line.dxy[1];
 	while (1)
 	{
